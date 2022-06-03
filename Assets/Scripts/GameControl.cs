@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.Experimental.Rendering.Universal;
+
 using EZCameraShake;
 
 public class GameControl : MonoBehaviour
@@ -435,7 +435,7 @@ public class GameControl : MonoBehaviour
         confetti.GetComponent<ParticleSystem>().Stop(false);
      //   darken.SetActive(false);
         spotlight.SetActive(false);
-        lighting.GetComponent<Light2D>().intensity += 0.3f;
+        lighting.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity += 0.3f;
 
     }
 
@@ -458,7 +458,7 @@ public class GameControl : MonoBehaviour
                 confetti.GetComponent<ParticleSystem>().emissionRate = sh.scale.x * 6;
                 // darken.SetActive(true);
                 spotlight.SetActive(true);
-                lighting.GetComponent<Light2D>().intensity -= 0.3f;
+                lighting.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity -= 0.3f;
                 Invoke("disableNewHs", 2f);
             }
             else if (score % 10 == 0)

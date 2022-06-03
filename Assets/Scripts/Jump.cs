@@ -140,9 +140,12 @@ public class Jump : MonoBehaviour
             gameObject.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x, 0); //on first time, slowly drifts downs
         }
 
-        if (Input.GetKeyDown("space") || Input.touchCount > 0)
-        {
+        int shooting = touchShoot(Input.touches);
 
+        if (Input.GetKeyDown("space") || ((shooting == -1 && Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+            || (Input.touchCount >= 2 && Input.touches[getOtherTouch(Input.touches, shooting)].phase == TouchPhase.Began)))
+        {
+        
             Spring();
            
         }
@@ -152,11 +155,42 @@ public class Jump : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
 
-        if ((Input.GetKeyDown("p") || Input.GetKeyDown("a")) && Time.time > nextFire)
+        if ((Input.GetKeyDown("p") || Input.GetKeyDown("a") || (touchShoot(Input.touches) >= 0))
+            && Time.time > nextFire)
         {
             Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, 2), Quaternion.identity);
             nextFire = Time.time + fireRate;
             FindObjectOfType<AudioManager>().Play("barrett");
         }
+    }
+
+    private int touchShoot(Touch[] touches)
+    {
+        
+        for(int i = 0; i < touches.Length; i++)
+        {
+            int h = Screen.height;
+            if(touches[i].position.y > ((4.0 * h) / 5.0))
+            {
+                Debug.Log("Touching");
+                return i;
+            }
+        }
+        return -1;
+
+    }
+
+    private int getOtherTouch(Touch[] touches, int shooting)
+    {
+        Debug.Assert(touches.Length >= 2);  
+        for (int i = 0; i < touches.Length; i++)
+        {
+            if(i != shooting)
+            {
+                return i;
+            }
+        }
+        return -1;
+
     }
 }

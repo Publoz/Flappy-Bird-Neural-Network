@@ -18,10 +18,10 @@ public class Pitbull : MonoBehaviour
 
         transform.Rotate(0, 0, 360 * Time.deltaTime);
 
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(-10, transform.position.y, 0), 18f * Time.deltaTime);
-       //transform.position.Set(this.gameObject.transform.position.x - 0.1f, this.gameObject.transform.position.y, this.gameObject.transform.position.z); ;
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(-30, transform.position.y, 0), 18f * Time.deltaTime);
+        //transform.position.Set(this.gameObject.transform.position.x - 0.1f, this.gameObject.transform.position.y, this.gameObject.transform.position.z); ;
 
-        if(transform.position.x + 0.5f < boundX )
+        if (transform.position.x + 0.5f < boundX)
         {
             Destroy(gameObject);
         }
